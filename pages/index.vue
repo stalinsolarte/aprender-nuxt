@@ -1,8 +1,13 @@
 <template>
   <div>
+
+    
+
     <h1>hola {{msg}}</h1>
     <input type="text" v-model="msg">
-    <button @click="guardar">Guardar</button>
+    <button @click="guardar"
+    class="btn btn-primary">Guardar</button>
+    <b-button variant="primary">Guardar</b-button>
     <table>
       <tr>
         <th>nombre</th>
@@ -15,7 +20,13 @@
 </template>
 
 <script>
+//import navbar from '../components/navbar'
+//import contacto from './contacto'
+//import contacto from './contacto'
+
 export default {
+  
+  //components: {navbar, contacto},
   data() {
     return {
       msg: "stalin solarte",
