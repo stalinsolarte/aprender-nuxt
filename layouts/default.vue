@@ -1,9 +1,13 @@
 <template>
     <div>
-        <h1>esto se repite en todas las paginas</h1>
+        <!--h1>esto se repite en todas las paginas</h1-->
         <navbar />
-        <nuxt />
-        esto es un footer
+        
+        <div class="container-fluid">
+            <nuxt />
+        </div>
+        
+        
     </div>
 </template>
 
