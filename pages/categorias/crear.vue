@@ -1,11 +1,13 @@
 <template>
-  <form name="from producto" @submit.prevent="guardarProducto">
-    <h1>Desde productos- Crear</h1>
+  <form name="from categorias" @submit.prevent="guardarCategorias">
+    <h1>Desde categorias- Crear</h1>
     <b-container class="bv-example-row">
       <b-row>
         <b-col col="12" md="4" offset-md="4">
-          
+
+            
             <div class="form-group">
+              <!--
               <label for="url">imagen</label>
               <input
                 type="text"
@@ -13,16 +15,17 @@
                 name="url"
                 placeholder="ingresar url"
                 
-              >
-              <label for="nombre">Nombre del producto</label>
+              > -->
+              <label for="nombre">Nombre de la categoria</label>
               <input
                 type="text"
                 class="form-control"
-                name="Nombre del producto"
-                placeholder="ingresar nombre"
+                name="Nombre de la categoria"
+                placeholder="ingresar categoria"
                 v-model="form.nombre"
                 required
               >
+              <!--
               <label for="precio">Precio</label>
               <input
                 type="number"
@@ -42,6 +45,7 @@
                 
                 required
               >
+              -->
             </div>
             <div class="row" id="galeria"></div>
           
@@ -50,7 +54,7 @@
 
       <b-row class="text-center">
         <b-col lg="6" md="6" offset-md="3">
-          <b-button variant="primary" href="/productos">volver</b-button>
+          <b-button variant="primary" href="/categorias">volver</b-button>
           <b-button variant="primary" type="submit"
           :disabled="guardando">
             <b-spinner small
@@ -71,9 +75,9 @@ export default {
     data(){
         return {
             form:{
-              nombre: '',
-              cantidad: '',
-              precio:'',  
+              nombre: ''
+              //cantidad: '',
+              //precio:'',  
             },
             
             guardando: false,
@@ -81,11 +85,11 @@ export default {
         }
     },
     methods:{
-        guardarProducto(){
+        guardarCategorias(){
           this.guardando = true
-                      db.collection("productos").add(this.form).then(res => { 
+                      db.collection("categorias").add(this.form).then(res => { 
                 this.$router.push({
-                    path: "/productos"
+                    path: "/categorias"
                 })
             })
         }

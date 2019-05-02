@@ -22,6 +22,9 @@
                 <b-nav-item href="/productos">
                     Productos
                 </b-nav-item>
+                <b-nav-item href="/categorias">
+                    Categorias
+                </b-nav-item>
             </b-navbar-nav>
         </b-collapse>
 

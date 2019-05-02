@@ -1,25 +1,27 @@
 <template>
   <div class="row mt-3">
     <div class="col-sm-6">
-      <h2>Listado de Productos</h2>
+      <h2>Categorias</h2>
       
     </div>
     <div class="col-sm-6">
-      <b-button variant="primary" href="/productos/crear">Nuevo</b-button>
+      <b-button variant="primary" href="/categorias/crear">Nuevo</b-button>
     </div>
     <div class="row mt-2">
-      <div class="col-ms-12">
+      <div class="col-sm-12">
     <b-table responsive striped hover 
     :fields="fields" 
-    :items="productos" id="productos" 
+    :items="categorias" id="categorias" 
     :current-page="currentPage"
     :per-page="perPage">
 
       <template slot="acciones" slot-scope="data">
+        <!--
         <b-button variant="success">
           Editar
         </b-button>
-        <b-button variant="danger" type="button" @click='eliminarProducto(data.item.id)'>
+        -->
+        <b-button variant="danger" type="button" @click='eliminarCategorias(data.item.id)'>
           Eliminar
         </b-button>
 
@@ -30,7 +32,7 @@
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
-      aria-controls="productos"
+      aria-controls="categorias"
     >
     </b-pagination>
       </div>
@@ -45,17 +47,17 @@ import { db } from "../../services/firebase";
 export default{
   asyncData(){
     return db
-      .collection("productos")
+      .collection("categorias")
       .get()
-      .then(productosSnap => {
-        let productos = []
-        productosSnap.forEach(value => {
-          productos.push({id: value.id,
+      .then(categoriasSnap => {
+        let categorias = []
+        categoriasSnap.forEach(value => {
+          categorias.push({id: value.id,
           ...value.data()})
         });
 
         return{
-          productos,
+          categorias,
           currentPage: 1,
           perPage: 5
 
@@ -65,26 +67,26 @@ export default{
 
   data(){
     return{
-      fields: ["Imagen", "nombre", "precio", "cantidad", "acciones"]
+      fields: ["nombre", "acciones"]
     }
   
   },
   computed:{
     rows(){
-      return this.productos.length
+      return this.categorias.length
     }
   },
   methods: {
-    eliminarProducto(id, index){
+    eliminarCategorias(id, index){
       //alert('ides: '+id)
-      db.collection('productos').doc(id).delete().then(() => {
+      db.collection('categorias').doc(id).delete().then(() => {
         let index
-        this.productos.map((value, key) => {
+        this.categorias.map((value, key) => {
           if(value.id == id){
             index = key
           }
         })
-        this.productos.splice(index,1)
+        this.categorias.splice(index,1)
       })
     }
   }
