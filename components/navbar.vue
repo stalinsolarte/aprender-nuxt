@@ -3,7 +3,7 @@
         <a href="/">inicio</a>
         <a href="/contacto">contacto</a>
     </div-->
-    <b-navbar variant="danger"
+    <b-navbar variant="dark"
         type="dark"
         toggleable="lg">
         <b-navbar-brand href="/">
@@ -25,6 +25,24 @@
                 <b-nav-item href="/categorias">
                     Categorias
                 </b-nav-item>
+                <b-nav-item href="/registro" v-if="!user">
+                    Registrarse
+                </b-nav-item>
+                <!--div v-if="user">{{user.displayName}}</div-->
+                
+            </b-navbar-nav>
+            <b-navbar-nav class="ml-auto">
+                <b-nav-item href="/login" v-if="!user">
+                    Iniciar Sesion
+                </b-nav-item>
+                <b-dropdown v-if="user" :text="user.displayName">
+                    <b-dropdown-item @click="cerrarSesion">Cerrar sesion</b-dropdown-item>
+                </b-dropdown>
+            </b-navbar-nav>
+            
+            <b-navbar-nav>
+                <input class="form-control mr-sm2" type="search" placeholder="Buscar" aria-label="Search" >
+                <b-button>Buscar</b-button>
             </b-navbar-nav>
         </b-collapse>
 
@@ -35,7 +53,22 @@
 </template>
 
 <script>
+import {auth} from '../services/firebase'
 export default {
-    
+    data(){
+        return{
+            user: false
+        }
+    },
+    created(){
+        auth.onAuthStateChanged(user => {
+            this.user = user
+        })
+    },
+    methods:{
+        cerrarSesion(){
+            auth.signOut()
+        }
+    }
 }
 </script>

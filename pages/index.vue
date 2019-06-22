@@ -1,31 +1,45 @@
 <template>
-  <div>
+  <div class="row mt-4">
 
+    <div class="col-sm-3" v-for="producto in productos" :key="producto.id">
+      <cardProducto :precio="producto.precio"
+        :nombre="producto.nombre"
+        :imagen="producto.imagen"/>
+    </div>
     
 
-    <h1>hola {{msg}}</h1>
-    <input type="text" v-model="msg">
-    <button @click="guardar"
-    class="btn btn-primary">Guardar</button>
-    <b-button variant="primary">Guardar</b-button>
-    <table>
-      <tr>
-        <th>nombre</th>
-      </tr>
-      <tr v-for="(item, index) in municipios" :key="index">
-        <td>{{item}}</td>
-      </tr>
-    </table>
+
   </div>
+  
 </template>
 
 <script>
+import {db} from '../services/firebase';
+import cardProducto from '../components/cardProducto';
 //import navbar from '../components/navbar'
 //import contacto from './contacto'
 //import contacto from './contacto'
 
 export default {
-  
+
+  components: {cardProducto},
+
+  asyncData(){
+    return db.collection("productos").get().then(productosSnap => {
+      let productos = [];
+
+      productosSnap.forEach(value => {
+        productos.push({
+          id: value.id,
+          ...value.data()
+        });
+      });
+      return {
+        productos
+      }
+    });
+  },
+  /*
   //components: {navbar, contacto},
   data() {
     return {
@@ -39,6 +53,23 @@ export default {
           this.municipios.push(this.msg)
           this.msg=''
       }
-  }
+  }*/
+
+data() {
+      return {
+        /*slide: 0,
+        sliding: null*/
+      }
+    },
+    methods: {
+      onSlideStart(slide) {
+        this.sliding = true
+      },
+      onSlideEnd(slide) {
+        this.sliding = false
+      }
+    }
+  
+
 };
 </script>
